@@ -12,7 +12,7 @@ listOfFolderNames = sorted(os.listdir(fileDir))
 
 for folder in listOfFolderNames:
     print(folder)
-    
+
     listOfFiles = sorted(os.listdir(fileDir + "\\" + folder))
     print(listOfFiles[0])
     imp = IJ.run(
