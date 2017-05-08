@@ -4,23 +4,22 @@ import os
 import shutil
 import time
 
+# ----------------------------------------------------------------
 fileDir = 'F:\\PHD\\HUMAN\\Intact\\Scan_Data\\G41-11_All\\Aligned'
+thresholds = [22.0, 255.0]
+# ----------------------------------------------------------------
 
-os.chdir(fileDir)
-# Scan through them separating them.
-listOfFolderNames = sorted(os.listdir(fileDir))
 
-for folder in listOfFolderNames:
-    print(folder)
+def editInImJ(folderF, fileDirF, newFolderNameF):
 
     listOfFiles = sorted(os.listdir(fileDir + "\\" + folder))
-    print(listOfFiles[0])
+
     imp = IJ.run(
         "Image Sequence...",
         "open=[" +
-        fileDir +
+        fileDirD +
         "\\" +
-        folder +
+        folderD +
         "\\" +
         listOfFiles[0] +
         "] sort")
@@ -28,10 +27,9 @@ for folder in listOfFolderNames:
     IJ.run(imp, "Gaussian Blur 3D...", "x=1 y=1 z=1")
 
     # IJ.setAutoThreshold(imp, "Default dark")
-    IJ.setThreshold(22.0, 255.0)
+    IJ.setThreshold(thresholds[0], thresholds[1])
     IJ.run(imp, "Convert to Mask", "method=Default background=Dark black")
     # IJ.run("Close")
-    newFolderName = folder + "_B_W_Gauss_22_"
     IJ.run(
         imp,
         "Image Sequence... ",
@@ -43,22 +41,37 @@ for folder in listOfFolderNames:
 
     IJ.run("Close")
 
-    if not os.path.exists(fileDir + "_Processed"):
-        os.makedirs(fileDir + "_Processed")
 
-    if not os.path.exists(fileDir + "_Processed\\" + newFolderName):
-        os.makedirs(fileDir + "_Processed\\" + newFolderName)
+def moveFiles(folderF, fileDirF, newFolderNameF):
 
-    listOfFiles = sorted(os.listdir(fileDir + "_Processed\\"))
+    if not os.path.exists(fileDirF + "_Processed"):
+        os.makedirs(fileDirF + "_Processed")
+
+    if not os.path.exists(fileDirF + "_Processed\\" + newFolderNameF):
+        os.makedirs(fileDirF + "_Processed\\" + newFolderNameF)
+
+    listOfFiles = sorted(os.listdir(fileDirF + "_Processed\\"))
     for files in listOfFiles:
-        if newFolderName in files:
+        if newFolderNameF in files:
             if "tif" in files:
                 shutil.move(
-                    fileDir +
+                    fileDirF +
                     "_Processed\\" +
                     files,
-                    fileDir +
+                    fileDirF +
                     "_Processed\\" +
-                    newFolderName +
+                    newFolderNameF +
                     "\\" +
                     files)
+
+
+if __name__ == "__main__":
+
+    os.chdir(fileDir)
+    # Scan through them separating them.
+    listOfFolderNames = sorted(os.listdir(fileDir))
+    newFolderName = folder + "_B_W_Gauss_22_"
+
+    for folder in listOfFolderNames:
+        editInImJ(folder, fileDir, newFolderName)
+        moveFiles(folder, fileDir, newFolderName)
