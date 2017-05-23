@@ -8,7 +8,7 @@ fileDir = 'F:\\PHD\\HUMAN\\Intact\\Scan_Data\\G21-11_All\\Aligned'
 
 def editInImJ(folderF, fileDirF):
 
-    listOfFiles = sorted(os.listdir(fileDir + "\\" + folder))
+    listOfFiles = sorted(os.listdir(fileDirF + "\\" + folder))
     mid_slice = len(listOfFiles)/2
 
     imp = IJ.run(
