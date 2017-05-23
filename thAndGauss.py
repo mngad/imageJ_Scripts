@@ -17,9 +17,9 @@ def editInImJ(folderF, fileDirF, newFolderNameF):
     imp = IJ.run(
         "Image Sequence...",
         "open=[" +
-        fileDirD +
+        fileDirF +
         "\\" +
-        folderD +
+        folderF +
         "\\" +
         listOfFiles[0] +
         "] sort")

@@ -1,0 +1,66 @@
+formatting changes
+
+# --------------
+# Please enter the commit message for your changes. Everything below
+# this paragraph is ignored, and an empty message aborts the commit.
+# Just close the window to accept your message.
+diff --git a/getHisto.py b/getHisto.py
+new file mode 100644
+index 0000000..fd00e79
+--- /dev/null
++++ b/getHisto.py
+@@ -0,0 +1,38 @@
++from ij import IJ
++import os
++
++# ----------------------------------------------------------------
++fileDir = 'F:\\PHD\\HUMAN\\Intact\\Scan_Data\\G41-11_All\\Aligned'
++thresholds = [22.0, 255.0]
++# ----------------------------------------------------------------
++
++
++def editInImJ(folderF, fileDirF):
++
++    listOfFiles = sorted(os.listdir(fileDir + "\\" + folder))
++
++    imp = IJ.run(
++        "Image Sequence...",
++        "open=[" +
++        fileDirF +
++        "\\" +
++        folderF +
++        "\\" +
++        listOfFiles[0] +
++        "] sort")
++        
++    print(len(listOfFiles)/2)
++    IJ.run(imp, "Histogram", str(len(listOfFiles)/2))
++    IJ.run(imp, "Save", "save=["+fileDirF+"\\Histogram of "+listOfFiles[0]+".tif]")
++    print(fileDirF+"\\Histogram of "+listOfFiles[0])
++    IJ.run("Close")
++    IJ.run("Close")
++
++if __name__ == "__main__":
++
++	os.chdir(fileDir)
++	# Scan through them separating them.
++	listOfFolderNames = sorted(os.listdir(fileDir))
++	for folder in listOfFolderNames:
++		editInImJ(folder, fileDir)
++       
+diff --git a/thAndGauss.py b/thAndGauss.py
+index 8174913..1301d37 100644
+--- a/thAndGauss.py
++++ b/thAndGauss.py
+@@ -17,9 +17,9 @@ def editInImJ(folderF, fileDirF, newFolderNameF):
+     imp = IJ.run(
+         "Image Sequence...",
+         "open=[" +
+-        fileDirD +
++        fileDirF +
+         "\\" +
+-        folderD +
++        folderF +
+         "\\" +
+         listOfFiles[0] +
+         "] sort")
