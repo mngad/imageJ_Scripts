@@ -2,15 +2,15 @@ from ij import IJ
 import os
 
 # ----------------------------------------------------------------
-fileDir = 'F:\\PHD\\HUMAN\\Intact\\Scan_Data\\G41-11_All\\Aligned'
-thresholds = [22.0, 255.0]
+fileDir = 'F:\\PHD\\HUMAN\\Intact\\Scan_Data\\G21-11_All\\Aligned'
 # ----------------------------------------------------------------
 
 
 def editInImJ(folderF, fileDirF):
 
     listOfFiles = sorted(os.listdir(fileDir + "\\" + folder))
-
+    mid_slice = len(listOfFiles)/2 
+	
     imp = IJ.run(
         "Image Sequence...",
         "open=[" +
@@ -19,13 +19,28 @@ def editInImJ(folderF, fileDirF):
         folderF +
         "\\" +
         listOfFiles[0] +
-        "] sort")
+        "] number=1 starting=" +
+        str(mid_slice) + 
+        " sort")
 
-    print(len(listOfFiles)/2)
-    IJ.run(imp, "Histogram", str(len(listOfFiles)/2))
-    IJ.run(imp, "Save", "save=["+fileDirF +
-           "\\Histogram of "+listOfFiles[0]+".tif]")
-    print(fileDirF+"\\Histogram of "+listOfFiles[0])
+    
+    print(mid_slice)
+    imp = IJ.getImage()
+    stats = imp.getStatistics()
+    IJ.run(imp, "Histogram", "")
+    imp = IJ.getImage()
+    IJ.run(imp, "Save", "save=[" + fileDirF +
+           "\\Histogram_of_" + listOfFiles[mid_slice] + "]")
+    
+    
+    GS = 0
+    print(stats.histogram[0:])
+    fil = open(fileDirF + "\\" + listOfFiles[mid_slice][:-5] + '_histogram.csv', 'w')
+    print(fileDirF + "\\" + listOfFiles[mid_slice][:-5] + '_histogram.csv')
+    for i in stats.histogram[0:]:
+        fil.write(str(GS) + ', ' + str(i) + '\n')
+        GS += 1
+    fil.close()
     IJ.run("Close")
     IJ.run("Close")
 
@@ -35,4 +50,5 @@ if __name__ == "__main__":
     # Scan through them separating them.
     listOfFolderNames = sorted(os.listdir(fileDir))
     for folder in listOfFolderNames:
-        editInImJ(folder, fileDir)
+        if not "istogram" in folder:
+            editInImJ(folder, fileDir)
