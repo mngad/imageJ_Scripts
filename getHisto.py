@@ -9,8 +9,8 @@ fileDir = 'F:\\PHD\\HUMAN\\Intact\\Scan_Data\\G21-11_All\\Aligned'
 def editInImJ(folderF, fileDirF):
 
     listOfFiles = sorted(os.listdir(fileDir + "\\" + folder))
-    mid_slice = len(listOfFiles)/2 
-	
+    mid_slice = len(listOfFiles)/2
+
     imp = IJ.run(
         "Image Sequence...",
         "open=[" +
@@ -20,10 +20,9 @@ def editInImJ(folderF, fileDirF):
         "\\" +
         listOfFiles[0] +
         "] number=1 starting=" +
-        str(mid_slice) + 
+        str(mid_slice) +
         " sort")
 
-    
     print(mid_slice)
     imp = IJ.getImage()
     stats = imp.getStatistics()
@@ -31,11 +30,11 @@ def editInImJ(folderF, fileDirF):
     imp = IJ.getImage()
     IJ.run(imp, "Save", "save=[" + fileDirF +
            "\\Histogram_of_" + listOfFiles[mid_slice] + "]")
-    
-    
+
     GS = 0
     print(stats.histogram[0:])
-    fil = open(fileDirF + "\\" + listOfFiles[mid_slice][:-5] + '_histogram.csv', 'w')
+    fil = open(fileDirF + "\\" +
+               listOfFiles[mid_slice][:-5] + '_histogram.csv', 'w')
     print(fileDirF + "\\" + listOfFiles[mid_slice][:-5] + '_histogram.csv')
     for i in stats.histogram[0:]:
         fil.write(str(GS) + ', ' + str(i) + '\n')
