@@ -2,7 +2,7 @@ from ij import IJ
 import os
 
 # ----------------------------------------------------------------
-fileDir = 'F:\\PHD\\HUMAN\\Intact\\Scan_Data\\G21-11_All\\Aligned'
+fileDir = 'F:\\PHD\\HUMAN\\Intact\\Scan_Data\\G17-11_All\\Aligned'
 # ----------------------------------------------------------------
 
 
