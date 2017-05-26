@@ -72,6 +72,7 @@ if __name__ == "__main__":
     listOfFolderNames = sorted(os.listdir(fileDir))
 
     for folder in listOfFolderNames:
-        newFolderName = folder + "_B_W_Gauss_" + thresholds[0] + "_"
+        newFolderName = folder + "_B_W_Gauss_" + str(int(thresholds[0])) + "_"
+        print(newFolderName[:-1])
         edit_in_imj(folder, fileDir, newFolderName)
         move_files(folder, fileDir, newFolderName)
